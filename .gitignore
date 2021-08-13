@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Bestrani
+app.ini
+prod-app.ini
+*.jpg
+migrations/

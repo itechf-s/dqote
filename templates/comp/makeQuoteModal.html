@@ -1,0 +1,81 @@
+{% load static %}
+<!-- Button trigger modal -->
+<p class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#mqModal{{quote.id}}" onclick="getImage({{quote.id}}); getFont({{quote.id}});">
+  Make Quote
+</p>
+
+<!-- Modal -->
+<div class="modal fade" id="mqModal{{quote.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remake Quote If not Good</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST" action="/wp-admin/make-quote">
+      {% csrf_token %}
+      <input type="hidden" value="{{quote.id}}" name="id" id="id"/>
+      <label class="form-label">Quotes Id : {{quote.id}}</label><br/>
+      <label class="form-label">Quotes Length : {{quote.quotes | length}}</label>
+      <div class="modal-body">
+      <div class="mb-3">
+          <div class="row">
+            <div class="col">
+              <label for="fontName-{{quote.id}}" class="form-label">FontName</label>
+              <select class="form-select" aria-label="Get fontName" id="fontName-{{quote.id}}" name="fontName">
+              </select>
+              <input type="hidden" id="hFontName-{{quote.id}}" value="{{quote.fontName}}"/>
+              <input type="hidden" id="hLocale-{{quote.id}}" value="{{quote.locale}}"/>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="fontSize" class="form-label">Font Size</label>
+          <input type="number" class="form-control" value="{{quote.fontSize}}" name="fontSize" id="fontSize" placeholder="Font Size">
+        </div>
+        <div class="mb-3">
+          <label for="wordWrap" class="form-label">Word Wrap</label>
+          <input type="number" class="form-control" name="wordWrap" id="wordWrap" value="{{quote.wordWrap}}" placeholder="Word Wrap">
+        </div>
+        <div class="mb-3">
+          <div class="row">
+            <div class="col">
+              <label for="image" class="form-label">Image</label>
+              <select class="form-select" aria-label="Get Image" id="imageId-{{quote.id}}" name="imageId" onchange="changeImg({{quote.imageId}}, this.id)">
+              <option value="{{quote.imageId}}" selected>{{quote.imageId}}</option>
+              </select>
+              <input type="hidden" id="hImageId-{{quote.id}}" value="{{quote.imageId}}"/>
+              <label class="form-label" id="imageTags-{{quote.id}}"></label>
+            </div>
+            <div class="col">
+              <img id="raw-img-{{quote.imageId}}" src="{% static 'images/raw/' %}{{quote.imageId}}.jpg" width="150" height="100" class="img-fluid rounded">
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+         <input class="form-check-input" type="radio" name="fontColor" id="fontColorRed" value="red" {% if quote.fontColor == 'red' %} checked {% endif %}>
+         <label class="form-check-label" for="fontColorRed">Red</label>
+         <input class="form-check-input" type="radio" name="fontColor" id="fontColorBlack" value="black" {% if quote.fontColor == 'black' %} checked {% endif %}>
+         <label class="form-check-label" for="fontColorBlack">Black</label>
+         <input class="form-check-input" type="radio" name="fontColor" id="fontColorWhite" value="white" {% if quote.fontColor == 'white' %} checked {% endif %}>
+         <label class="form-check-label" for="fontColorWhite">White</label>
+         <input class="form-check-input" type="radio" name="fontColor" id="fontColorBlue" value="blue" {% if quote.fontColor == 'blue' %} checked {% endif %}>
+         <label class="form-check-label" for="fontColorBlue">Blue</label>
+         <input class="form-check-input" type="radio" name="fontColor" id="fontColorGreen" value="green" {% if quote.fontColor == 'green' %} checked {% endif %}>
+         <label class="form-check-label" for="fontColorGreen">Green</label>
+        </div>
+        <div class="mb-3">
+          <input class="form-check-input" type="checkbox" {% if quote.isPin == 1 %} checked {% endif %} value="1" id="isPin" name='isPin'>
+          <label class="form-check-label" for="isPin">Pintrest Image</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Make</button>
+      </div>
+      </form>
+
+
+    </div>
+  </div>
+</div>
