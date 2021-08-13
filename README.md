@@ -10,5 +10,5 @@ https://dqote.com
 If any Question feel free to contact us 
 https://itechf.com/contact/
 
-db table copy
-mysqldump --user=root quotes quotes_images --password=t00r --compact --add-drop-table | mysql -u root --password=t00r dqote
+# db table copy
+`mysqldump --user=root quotes quotes_images --password=t00r --compact --add-drop-table | mysql -u root --password=t00r dqote`
