@@ -21,10 +21,18 @@
   {% endif %}
   </div>
     <div class="card-body">
-      <p class="card-text text-center blockquote urdu">{{quote.id}}. {{quote.quotes}} Lang: {{quote.locale}}</p>
+      <p class="card-text text-center blockquote urdu">{{quote.id}}. {{quote.quotes}}</p>
       <p class="text-end">{{quote.author}}</p>
       <p class="card-text">{{quote.category}}</p>
       <p class="card">{{quote.publishAt}}</p>
+
+      {% for id, name in localeList.items %}
+        {% if id == quote.locale %}
+          <p class="card-text">Language : {{name.1}}</p>
+        {% else %}
+      {% endif %}
+      {% endfor %}
+
       {% if quote.isActive == 0 and quote.isUpdated == 0 or quote.isPin == 0 %}
       <p class="btn btn-outline-dark btn-sm" onclick="prepareQuotes({{quote.id}}, 1)">Prepare Quotes</p>
       {% include './deleteQuoteModal.html' %}
@@ -33,6 +41,7 @@
         {% if quote.isSchd == 0 %}
         <p class="btn btn-outline-dark btn-sm" onclick="schedule({{quote.id}}, 1)">Schedule</p>
         {% endif %}
+      
       <p class="btn btn-outline-dark btn-sm" onclick="activate({{quote.id}}, 1)">Publish</p>
       {% endif %}
       {% if quote.isActive == 1 %}
@@ -54,7 +63,6 @@
   {% endfor %}
 </div>
 {% include './pagination.html' %} 
-<span class="text">1:'English', 2:'हिन्दी', 4:'Bengali', 5:'Punjabi', 6:'Marathi', 7:'Telugu', 3:'اردو'</span>
 {% include './searchModal.html' %}
 {% include './importQuotesModal.html' %}
 {% include './importImageModal.html' %}

@@ -18,6 +18,7 @@ autoPinMaxChar = int(env.get('quotes', 'AUTO_PIN_MAX_CHAR'))
 pinMod = int(env.get('quotes', 'PIN_MOD'))
 autoCreateRows = int(env.get('quotes', 'AUTO_CREATE_ROWS'))
 qotFilePath = env.get('quotes', 'TSV_FILE_PATH')
+localeList = eval(env.get('quotes','LOCALE_LIST'))
 
 
 def showLogin(request):
@@ -69,7 +70,7 @@ def list(request, isActive, isUpdated):
     paginator = Paginator(quotes, adminRows)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'list.html', {'page_obj': page_obj})
+    return render(request, 'list.html', {'page_obj': page_obj, 'localeList': localeList})
 
 @login_required(login_url='/mycms')
 def activate(request):
@@ -124,7 +125,7 @@ def listImages(request, isActive):
     paginator = Paginator(rawImages, imageRows)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'images.html', {'page_obj': page_obj})
+    return render(request, 'images.html', {'page_obj': page_obj, 'localeList': localeList})
 
 @login_required(login_url='/mycms')
 def actImage(request):

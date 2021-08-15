@@ -10,6 +10,7 @@ from dqote import env
 rows = int(env.get('quotes','ROWS'))
 pinRows = int(env.get('quotes','PIN_ROWS'))
 urlPrefix = env.get('general','URL_PREFIX')
+localeList = eval(env.get('quotes','LOCALE_LIST'))
 
 def index(request):
     filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'locale' : 1}
@@ -21,7 +22,7 @@ def index(request):
     page_obj = paginator.get_page(page_number)
     url = urlPrefix + '/'
     metas = seo.setMetas(pinQuotes, url)
-    return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'pinQuotes': pinQuotes, 'page_obj': page_obj})
+    return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def category(request, category):
     filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'category' : category, 'locale' : 1}
@@ -40,7 +41,7 @@ def category(request, category):
 
     url = urlPrefix + '/' + category + '-quotes'
     metas = seo.setMetas(pinQuotes, url)
-    return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'pinQuotes': pinQuotes, 'page_obj': page_obj})
+    return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def author(request, authorSlug):
     filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'locale' : 1, 'authorSlug' : authorSlug}
@@ -58,7 +59,7 @@ def author(request, authorSlug):
         quotes = Quotes.objects.filter(**filterParam).order_by('-publishAt')[:rows]
     url = urlPrefix + '/authors/' + authorSlug + '-quotes'
     metas = seo.setMetas(pinQuotes, url)
-    return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'pinQuotes': pinQuotes, 'page_obj': page_obj})
+    return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def authorsList(request):
     isActive = request.GET.get('isActive', None)
@@ -105,7 +106,7 @@ def details(request, quotesSlug, id):
  
     url = urlPrefix + '/quotes/' + quotesSlug + '-' + str(id)
     metas = seo.setMetas((quote1,), url)
-    return render(request, 'details.html', {'quotes': quotes, 'quote1' : quote1, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'pinQuotes': pinQuotes, 'page_obj': page_obj})
+    return render(request, 'details.html', {'quotes': quotes, 'quote1' : quote1, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def showLogin(request):
     return render(request, 'login.html')
@@ -149,7 +150,7 @@ def dynamicHome(request, locale):
     quotes = Quotes.objects.filter(**filterParam).order_by('-publishAt')[:rows]
     url = urlPrefix + '/' + locale
     metas = seo.setMetas(pinQuotes, url)
-    return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'pinQuotes': pinQuotes, 'page_obj': page_obj})
+    return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def dynamicDetails(request, locale, quotesSlug, id):
     langCode = getLocaleCode(locale)
@@ -165,7 +166,7 @@ def dynamicDetails(request, locale, quotesSlug, id):
  
     url = urlPrefix + '/' + locale + '/quotes/' + quotesSlug + '-' + str(id)
     metas = seo.setMetas((quote1,), url)
-    return render(request, 'dynamic-details.html', {'locale': locale, 'quotes': quotes, 'quote1' : quote1, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'pinQuotes': pinQuotes, 'page_obj': page_obj})
+    return render(request, 'dynamic-details.html', {'locale': locale, 'quotes': quotes, 'quote1' : quote1, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def dynamicCategory(request, locale, category):
     langCode = getLocaleCode(locale)
@@ -186,7 +187,7 @@ def dynamicCategory(request, locale, category):
 
     url = urlPrefix + '/' + locale + '/' + category + '-quotes'
     metas = seo.setMetas(pinQuotes, url)
-    return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'pinQuotes': pinQuotes, 'page_obj': page_obj})
+    return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def dynamicAuthor(request, locale, authorSlug):
     langCode = getLocaleCode(locale)
@@ -206,7 +207,7 @@ def dynamicAuthor(request, locale, authorSlug):
         quotes = Quotes.objects.filter(**filterParam).order_by('-publishAt')[:rows]
     url = urlPrefix + '/' + locale + '/authors/' + authorSlug + '-quotes'
     metas = seo.setMetas(pinQuotes, url)
-    return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'pinQuotes': pinQuotes, 'page_obj': page_obj})
+    return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def getLocaleCode(locale):
     langCode = 2 if locale == 'hindi' else 1
