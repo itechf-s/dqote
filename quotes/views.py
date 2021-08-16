@@ -210,10 +210,8 @@ def dynamicAuthor(request, locale, authorSlug):
     return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
 def getLocaleCode(locale):
-    langCode = 2 if locale == 'hindi' else 1
-    langCode = 3 if locale == 'urdu' else langCode
-    langCode = 4 if locale == 'bengali' else langCode
-    langCode = 5 if locale == 'punjabi' else langCode
-    langCode = 6 if locale == 'marathi' else langCode
-    langCode = 7 if locale == 'telugu' else langCode
+    langCode = 1
+    for id, name in localeList.items():
+        if name[0] == locale:
+            langCode = id
     return langCode
