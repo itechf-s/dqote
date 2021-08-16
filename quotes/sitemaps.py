@@ -51,7 +51,7 @@ class QuotesCategorySitemap(Sitemap):
     priority = 0.5
 
     def items(self):
-        filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'locale' : 1}
+        filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now()}
         return Quotes.objects.values('category', 'categorySlug', 'locale').filter(**filterParam).order_by('category').distinct()
 
     def location(self, item):
