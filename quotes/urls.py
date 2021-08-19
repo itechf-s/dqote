@@ -12,6 +12,8 @@ sitemaps = {'quotes': QuotesDetailsSitemap, 'author' : QuotesAuthorSitemap, 'cat
 
 urlpatterns = [
     path('',views.index, name='index'),
+    path('about/',views.about, name='about'),
+    path('contact/',views.contact, name='contact'),
     path('<slug:category>-quotes',views.category, name='category'),
     path('authors/<slug:authorSlug>-quotes',views.author, name='author'),
     path('authors-list',views.authorsList, name='authorsList'),

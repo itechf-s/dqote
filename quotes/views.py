@@ -24,6 +24,26 @@ def index(request):
     metas = seo.setMetas(pinQuotes, url)
     return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
+def about(request):
+    filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'locale' : 1}
+    pinQuotes = Quotes.objects.filter(**filterParam).order_by('?')[:pinRows/2]
+    paginator = Paginator(pinQuotes, pinRows)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    url = urlPrefix + '/about/'
+    metas = seo.setMetas(pinQuotes, url)
+    return render(request, 'about.html', {'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
+
+def contact(request):
+    filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'locale' : 1}
+    pinQuotes = Quotes.objects.filter(**filterParam).order_by('?')[:pinRows/2]
+    paginator = Paginator(pinQuotes, pinRows)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    url = urlPrefix + '/contact/'
+    metas = seo.setMetas(pinQuotes, url)
+    return render(request, 'contact.html', {'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
+
 def category(request, category):
     filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'category' : category, 'locale' : 1}
     pinQuotes = Quotes.objects.filter(**filterParam).order_by('-publishAt')
