@@ -3,6 +3,10 @@ import textwrap, time
 from django.utils.text import slugify
 from quotes.admin.wpmodels import Images
 from quotes.admin import utils
+from dqote import env
+
+pinMod = int(env.get('quotes', 'PIN_MOD'))
+autoPinMaxChar = int(env.get('quotes', 'AUTO_PIN_MAX_CHAR'))
 
 def updateQuotesImage(quotesObj):
 
@@ -32,3 +36,12 @@ def updateQuotesImage(quotesObj):
         obj.fontColor = 'white'
         obj.imageId = img.id
         obj.save()
+        autoCreateQuotes(obj)
+        
+def autoCreateQuotes(quote):
+    param = ('', '', '', '', '')
+    quote.isAuto = 1
+    utils.writeQuotesOnImage(quote, param)
+    if quote.id % pinMod == 0 and quote.quotes.__len__() < autoPinMaxChar:
+        quote.isPin = 1
+        utils.writeQuotesOnImagePin(quote, param)

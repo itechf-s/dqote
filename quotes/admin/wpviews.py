@@ -103,7 +103,7 @@ def update(request):
     id = request.POST.get('id', None)
     print(id)
     if id:
-        quotes = Quotes.objects.filter(id=id).order_by('id')[:2]
+        quotes = Quotes.objects.filter(id=id).order_by('id')[:1]
     else:
         quotes = Quotes.objects.filter(isUpdated=0).order_by('id')[:createRows]
     process.updateQuotesImage(quotes)
@@ -173,12 +173,7 @@ def bulkQuotes(rows):
     quotes = Quotes.objects.filter(**filterParam).order_by('id')[:rows]
     process.updateQuotesImage(quotes)
     for quote in quotes:
-        param = ('', '', '', '')
-        quote.isAuto = 1
-        utils.writeQuotesOnImage(quote, param)
-        if quote.id % pinMod == 0 and quote.quotes.__len__() < autoPinMaxChar:
-            quote.isPin = 1
-            utils.writeQuotesOnImagePin(quote, param)
+        process.autoCreateQuotes(quote)
 
 @login_required(login_url='/mycms')
 def chkLogout(request):
