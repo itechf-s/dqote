@@ -1,5 +1,20 @@
-<title>{{metas.title}}</title>
+<title>{{metas.metaNames.title}}</title>
 <link rel="canonical" href="{{url}}" />
-{% for prop, content in metas.items %}
+{% for name, content in metas.metaNames.items %}
+    <meta name="{{name}}" content="{{content}}" />
+{% endfor %}
+{% for prop, content in metas.metaProps.items %}
     <meta property="{{prop}}" content="{{content}}" />
 {% endfor %}
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    "author": "Iffat Zia",
+    "contentUrl": "{{url}}",
+    "datePublished": "{{metas.metaNames.datePublished}}",
+    "description": "{{metas.metaNames.description}}",
+    "name": "{{metas.metaNames.title}}"
+}
+</script>
