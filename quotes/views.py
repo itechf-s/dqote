@@ -44,6 +44,26 @@ def contact(request):
     metas = seo.setMetas(pinQuotes, url)
     return render(request, 'contact.html', {'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
 
+def privacyPolicy(request):
+    filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'locale' : 1}
+    pinQuotes = Quotes.objects.filter(**filterParam).order_by('?')[:pinRows/2]
+    paginator = Paginator(pinQuotes, pinRows)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    url = urlPrefix + '/privacy-policy/'
+    metas = seo.setMetas(pinQuotes, url)
+    return render(request, 'privacy-policy.html', {'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
+
+def tnc(request):
+    filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'locale' : 1}
+    pinQuotes = Quotes.objects.filter(**filterParam).order_by('?')[:pinRows/2]
+    paginator = Paginator(pinQuotes, pinRows)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    url = urlPrefix + '/terms-and-conditions/'
+    metas = seo.setMetas(pinQuotes, url)
+    return render(request, 'terms-and-conditions.html', {'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
+
 def category(request, category):
     filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'category' : category, 'locale' : 1}
     pinQuotes = Quotes.objects.filter(**filterParam).order_by('-publishAt')

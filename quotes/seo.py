@@ -26,6 +26,7 @@ def setMetas(qots, url):
         metaProps['og:description'] = desc
         metaProps['og:url'] = url
         metaProps['og:image'] = imgPath
+        metaProps['og:image:alt'] = qot.imageAlt
         metaProps['og:image:type'] = 'image/jpeg'
         metaProps['og:image:width'] = qWidth
         metaProps['og:image:height'] = qHeight
