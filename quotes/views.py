@@ -22,7 +22,9 @@ def index(request):
     page_obj = paginator.get_page(page_number)
     url = urlPrefix + '/'
     metas = seo.setMetas(pinQuotes, url)
-    return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
+    aList = authorList(1)
+    cList = categoryList(1)
+    return render(request, 'index.html', {'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj, 'aList' : aList, 'cList' : cList})
 
 def about(request):
     filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'isPin' : 1, 'locale' : 1}
@@ -190,7 +192,9 @@ def dynamicHome(request, locale):
     quotes = Quotes.objects.filter(**filterParam).order_by('-publishAt')[:rows]
     url = urlPrefix + '/' + locale
     metas = seo.setMetas(pinQuotes, url)
-    return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
+    aList = authorList(langCode)
+    cList = categoryList(langCode)
+    return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, 'urlPrefix' : urlPrefix, 'localeList': localeList, 'page_obj': page_obj, 'aList' : aList, 'cList' : cList})
 
 def dynamicDetails(request, locale, quotesSlug, id):
     langCode = getLocaleCode(locale)
@@ -248,6 +252,14 @@ def dynamicAuthor(request, locale, authorSlug):
     url = urlPrefix + '/' + locale + '/authors/' + authorSlug + '-quotes'
     metas = seo.setMetas(pinQuotes, url)
     return render(request, 'dynamic-home.html', {'locale': locale, 'quotes': quotes, 'metas' : metas, 'url': url, "urlPrefix" : urlPrefix, 'localeList': localeList, 'page_obj': page_obj})
+
+def authorList(locale):
+    filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'locale' : locale}
+    return Quotes.objects.values('author', 'authorSlug', 'locale').filter(**filterParam).order_by('author').distinct()[:7]
+
+def categoryList(locale):
+    filterParam = {'isActive' : 1, 'publishAt__lt' : timezone.now(), 'locale' : locale}
+    return Quotes.objects.values('category', 'categorySlug', 'locale').filter(**filterParam).order_by('category').distinct()[:7]
 
 def getLocaleCode(locale):
     langCode = 1
