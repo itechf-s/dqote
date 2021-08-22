@@ -94,9 +94,12 @@ def activate(request):
 
 def runSchedule():
     filterParam = {'isActive' : 0, 'isUpdated' : 1, 'isSchd' : 1}
-    quote = Quotes.objects.filter(**filterParam).order_by('id').first()
+    for locale, name in localeList.items():
+        filterParam['locale'] = locale
+        quote = Quotes.objects.filter(**filterParam).order_by('id').first()
+        if quote:
+            db.activateQuotes(quote)
     bulkQuotes(autoCreateRows)
-    db.activateQuotes(quote)
 
 @login_required(login_url='/mycms')
 def update(request):
@@ -172,8 +175,8 @@ def bulkQuotes(rows):
     filterParam = {'isUpdated' : 0, 'isAuto': 0, 'isSchd': 0, 'isActive' : 0}
     quotes = Quotes.objects.filter(**filterParam).order_by('id')[:rows]
     process.updateQuotesImage(quotes)
-    for quote in quotes:
-        process.autoCreateQuotes(quote)
+    #for quote in quotes:
+    #    process.autoCreateQuotes(quote)
 
 @login_required(login_url='/mycms')
 def chkLogout(request):

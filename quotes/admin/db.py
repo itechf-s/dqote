@@ -4,7 +4,7 @@ def activateQuotes(obj):
     obj.isSchd = 0
     obj.publishAt = timezone.now()
     obj.save()
-    print('activate : ', obj.publishAt)
+    print('activated Quotes Id : ', obj.id, ' | locale : ', obj.locale, ' | Published At : ', obj.publishAt)
 
 def deAactivateQuotes(obj):
     obj.isActive = 0
@@ -14,7 +14,7 @@ def deAactivateQuotes(obj):
 def scheduleQuotes(obj, isSchd):
     obj.isSchd = isSchd
     obj.save()
-    print('schedule/un schedule Quotes : ', obj.publishAt)
+    print('schedule/un schedule Quotes : ', obj.updatedAt)
 
 def activateImage(imgs, isActive):
     obj = imgs[0]

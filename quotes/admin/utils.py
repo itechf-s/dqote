@@ -152,7 +152,7 @@ def writeQuotesOnImagePin(qot, param):
     #Show image
     createDir(app_root + image_path + qot.imagePathPin)
     im.save(app_root + image_path + qot.imagePathPin, optimize = True, quality = 70)
-    print('writeQuotesOnImage done for id: ', qot.id)
+    print('writeQuotesOnImage Pin done for id: ', qot.id)
 
 
 def findFont(qot):
@@ -240,6 +240,8 @@ def isImageExist(imageId):
     if os.path.isfile(fileName):
         print('file found')
         flag = True
+    else:
+        print('image not found : ', fileName)
     return flag
 
 def deleteImagePin(qot):

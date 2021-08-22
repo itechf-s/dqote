@@ -31,6 +31,8 @@ def updateQuotesImage(quotesObj):
         fontObj = utils.findFont(obj)
         obj.fontName = fontObj['name']
         obj.fontSize = fontObj['size']
+        if obj.locale == 3:
+            obj.fontSize = obj.fontSize + 15
         obj.wordWrap = fontObj['wrap']
         obj.rawImage = img.previewURL
         obj.fontColor = 'white'
