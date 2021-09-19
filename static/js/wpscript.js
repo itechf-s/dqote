@@ -130,17 +130,22 @@ function callByUrl(type) {
   }
 }
 function loadData() {
+
   callByUrl('author');
   callByUrl('category');
   callByUrl('image');
   callByUrl('font');
-  window.location.reload();
+  //window.location.reload();
 }
 
 function myOnLoad() {
   getAuthor();
   getCategory();
-  console.log('Onload Called')
+}
+
+function loadAuthAndCat() {
+  getAuthor();
+  getCategory();
 }
 
 function getAuthor(){
@@ -150,7 +155,8 @@ function getAuthor(){
     authorList = localStorage.getItem('author');
   } else {
     var myDiv = document.getElementById('loadData');
-    myDiv.remove();
+    if(myDiv)
+      myDiv.remove();
   }
   authorList = JSON.parse(authorList);
     var list = document.getElementById('author');
@@ -234,4 +240,4 @@ function getFont(id){
     }
 }
 
-window.addEventListener('load', myOnLoad);
+//window.addEventListener('load', myOnLoad);
