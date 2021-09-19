@@ -2,6 +2,7 @@
 <input type="hidden" id="hCsrf" value="{{ csrf_token }}"/>
 <input type="hidden" id="hRawImgPrefix" value="{% static 'images/raw/' %}"/>
 <input type="hidden" id="hVer" value="{% now 'u' %}"/>
+<div class="blockquote">Total : {{page_obj.paginator.count}} Image{{page_obj.paginator.count|pluralize}} </div>
 {% include './pagination.html' %}   
 <div class="card-group mt-3 mb-3 ms-1 me-1">
 {% for image in page_obj %}
