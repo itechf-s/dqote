@@ -3,6 +3,36 @@ var csrfToken = document.getElementById('hCsrf').value;
 var rawImgPrefix = document.getElementById('hRawImgPrefix').value;
 var ver = document.getElementById('hVer').value;
 
+//Image Related
+function imageActivate(id, isActive) {
+  let formData = new FormData();
+    formData.append('id', id);
+    formData.append('isActive', isActive);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+    fetch("/wp-admin/act-image",{
+      body: formData,
+      method: "post"
+  });
+  console.log(id)
+  window.location.reload()
+  
+ }
+
+ function changeImageViews(id, isActive, views) {
+  //console.log('id : ' + id + ' | isActive: ' + isActive + ' | views : ' + views);
+let formData = new FormData();
+    formData.append('id', id);
+    formData.append('isActive', isActive);
+    formData.append('views', views);
+    formData.append('csrfmiddlewaretoken', csrfToken);
+    fetch("/wp-admin/act-image",{
+    body: formData,
+    method: "post"
+});
+window.location.reload();
+}
+
+// Quotes Related
 function activate(id, isActive) {
 let formData = new FormData();
     formData.append('id', id);
@@ -14,6 +44,7 @@ let formData = new FormData();
 });
 delDiv('qCardDiv' + id);
 }
+
 //schedule quotes
 function schedule(id, isSchd) {
 let formData = new FormData();
@@ -61,7 +92,7 @@ let formData = new FormData();
     method: "post"
 });
 //console.log(id)
-window.location.reload()
+window.location.reload();
 
 }
 
@@ -109,6 +140,7 @@ function loadData() {
 function myOnLoad() {
   getAuthor();
   getCategory();
+  console.log('Onload Called')
 }
 
 function getAuthor(){

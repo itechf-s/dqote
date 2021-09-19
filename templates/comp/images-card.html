@@ -1,19 +1,7 @@
 {% load static %}
-<script>
-   function activate(id, isActive) {
-    let formData = new FormData();
-      formData.append('id', id);
-      formData.append('isActive', isActive);
-      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
-      fetch("/wp-admin/act-image",{
-        body: formData,
-        method: "post"
-    });
-    console.log(id)
-    window.location.reload()
-    
-   }
-   </script>
+<input type="hidden" id="hCsrf" value="{{ csrf_token }}"/>
+<input type="hidden" id="hRawImgPrefix" value="{% static 'images/raw/' %}"/>
+<input type="hidden" id="hVer" value="{% now 'u' %}"/>
 {% include './pagination.html' %}   
 <div class="card-group mt-3 mb-3 ms-1 me-1">
 {% for image in page_obj %}
@@ -22,15 +10,21 @@
       <img src="{{image.previewURL}}" class="img-fluid rounded" alt="{{image.tags}}" title="{{image.tags}}">
     </a>
     <div class="card-body">
-    <div>{{image.tags}}</div>
+    <div>Tags : {{image.tags}}</div>
+    <div>Font Clolor : {{image.views}}</div>
       <a href="{{image.webformatURL}}" class="card-text">Show {{image.id}}</a>    
       {% if image.isActive == 0 %}
-        <p class="btn" onclick="activate({{image.id}}, 1)">Activate</p>
+        <p class="btn" onclick="imageActivate({{image.id}}, 1)">Activate</p>
       {% endif %}
       {% if image.isActive == 1 %}
-        <p class="btn" onclick="activate({{image.id}}, 0)">Deactivate</p>
+        <p class="btn" onclick="imageActivate({{image.id}}, 0)">Deactivate</p>
       {% endif %} 
-
+      <div class="row">
+      Change Font Color :
+      <p class="btn col" onclick="changeImageViews({{image.id}}, {{image.isActive}}, 'red')">Red</p>
+      <p class="btn col" onclick="changeImageViews({{image.id}}, {{image.isActive}}, 'black')">Black</p>
+      <p class="btn col" onclick="changeImageViews({{image.id}}, {{image.isActive}}, 'white')">White</p>
+      </div>
     </div>
 
    </div>
@@ -41,3 +35,4 @@
   {% endfor %}
 </div>
 {% include './pagination.html' %}
+<script src="{% static './js/wpscript.js' %}"></script>

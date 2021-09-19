@@ -13,6 +13,7 @@ urlpatterns = [
     path('import-quotes-data', wpviews.importQuotes, name='cachePurge'),
 
     path('saveImagesInDb',wpviews.saveImagesInDb, name='saveImagesInDb'),
+    path('saveLocImagesInDb',wpviews.saveLocImagesInDb, name='saveLocImagesInDb'),
     path('list-images/<int:isActive>',wpviews.listImages, name='listImages'),
     path('act-image',wpviews.actImage, name='actImage'),
 

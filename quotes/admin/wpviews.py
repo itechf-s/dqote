@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 from django.shortcuts import redirect, render
 from quotes.models import Quotes
-from quotes.admin import data, process, db, getImages, utils
+from quotes.admin import data, process, db, getImages, utils, getLocImages
 from quotes.admin.wpmodels import Images
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -119,6 +119,16 @@ def saveImagesInDb(request):
     return render(request, 'images.html', {'images': rawImages})
 
 @login_required(login_url='/mycms')
+def saveLocImagesInDb(request):
+    username = request.user.username
+    getLocImages.saveImagesInDb(username)
+    rawImages = Images.objects.filter(isActive=1).filter(createdAt__lt = timezone.now()).order_by('-createdAt')
+    paginator = Paginator(rawImages, imageRows)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'images.html', {'page_obj': page_obj, 'localeList': localeList})
+
+@login_required(login_url='/mycms')
 def listImages(request, isActive):
     tags = request.GET.get('tags', None)
     filterParam = {'isActive' : isActive, 'createdAt__lt' : timezone.now()}
@@ -134,10 +144,11 @@ def listImages(request, isActive):
 def actImage(request):
     id = request.POST.get('id', None)
     isActive = request.POST.get('isActive', None)
+    views = request.POST.get('views', None)
     image = None
-    if id != None:
+    if id:
         image = Images.objects.filter(id=id)
-        db.activateImage(image, isActive)      
+        db.activateImage(image, isActive, views)      
     return render(request, 'activate.html')
 
 @login_required(login_url='/mycms')

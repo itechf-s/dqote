@@ -35,7 +35,7 @@ def updateQuotesImage(quotesObj):
             obj.fontSize = obj.fontSize + 15
         obj.wordWrap = fontObj['wrap']
         obj.rawImage = img.previewURL
-        obj.fontColor = 'white'
+        obj.fontColor = img.views
         obj.imageId = img.id
         obj.save()
         autoCreateQuotes(obj)

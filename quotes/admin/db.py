@@ -16,8 +16,10 @@ def scheduleQuotes(obj, isSchd):
     obj.save()
     print('schedule/un schedule Quotes : ', obj.updatedAt)
 
-def activateImage(imgs, isActive):
+def activateImage(imgs, isActive, views):
     obj = imgs[0]
     obj.isActive = isActive
+    if views:
+        obj.views = views
     obj.save()
     print('Activate/Deactivate Image: ', obj.id)

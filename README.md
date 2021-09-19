@@ -12,3 +12,7 @@ https://itechf.com/contact/
 
 # db table copy
 `mysqldump --user=root quotes quotes_images --password=t00r --compact --add-drop-table | mysql -u root --password=t00r dqote`
+
+## Query
+select * from quotes_images order by id desc limit 2 \G
+update quotes_images set views = 'white';
