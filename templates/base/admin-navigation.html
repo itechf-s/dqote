@@ -33,8 +33,21 @@
             <li><span onclick="loadData();" class="dropdown-item btn">Reload List</span></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a href="/wp-admin/cache-purge?id=159753" aria-current="page" class="nav-link">Purge</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="ImagesMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Admin
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="ImagesMenuLink">
+            <li><a href="/wp-admin/makeSiteLive?v={% now 'u' %}&id=159753&site=bestrani" class="dropdown-item">bestrani Live</a></li>
+            <li><a href="/wp-admin/makeSiteLive?v={% now 'u' %}&id=159753&site=itechf" class="dropdown-item">itechf Live</a></li>
+            <li><a href="/wp-admin/makeSiteLive?v={% now 'u' %}&id=159753&site=fincz" class="dropdown-item">fincz Live</a></li>
+            <li><a href="/wp-admin/makeSiteLive?v={% now 'u' %}&id=159753&site=gkgud" class="dropdown-item">gkgud Live</a></li>
+            <li><a href="/wp-admin/purgeSite?v={% now 'u' %}&id=159753&site=bestrani" class="dropdown-item">Purge Bestrani</a></li>
+            <li><a href="/wp-admin/purgeSite?v={% now 'u' %}&id=159753&site=itechf" class="dropdown-item">Purge itechf</a></li>
+            <li><a href="/wp-admin/purgeSite?v={% now 'u' %}&id=159753&site=fincz" class="dropdown-item">Purge fincz</a></li>
+            <li><a href="/wp-admin/purgeSite?v={% now 'u' %}&id=159753&site=gkgud" class="dropdown-item">Purge gkgud</a></li>
+            <li><a href="/wp-admin/cache-purge?v={% now 'u' %}&id=159753" class="dropdown-item">Purge Quotes</a></li>
+          </ul>
         </li>
         </ul>
         <span class="navbar-text"><a href="/wp-admin/chk-logout" aria-current="page" class="nav-link">Logout</a></span>

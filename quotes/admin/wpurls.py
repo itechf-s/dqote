@@ -16,6 +16,8 @@ urlpatterns = [
     path('saveLocImagesInDb',wpviews.saveLocImagesInDb, name='saveLocImagesInDb'),
     path('list-images/<int:isActive>',wpviews.listImages, name='listImages'),
     path('act-image',wpviews.actImage, name='actImage'),
+    path('makeSiteLive',wpviews.makeSiteLive, name='makeSiteLive'),
+    path('purgeSite',wpviews.purgeSite, name='purgeSite'),
 
     path('chk-login',wpviews.chkLogin, name='login'),
     path('chk-logout',wpviews.chkLogout, name='logout'),

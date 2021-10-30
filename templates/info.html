@@ -1,0 +1,23 @@
+{% extends 'base/admin-base.html' %}
+
+{% block title %}
+  Site Admin
+{% endblock  %}
+
+{% block body %}  
+<p>
+  This is Admin Page
+</p>
+<br/>
+<p>
+  Command : <code>{{res.0}}</code>
+</p>
+<br/>
+<p>
+  Command Output : <code>{{res.1}}</code>
+</p>
+<br/>
+<p>
+  Command Error : <code>{{res.2}}</code>
+</p>
+{% endblock %}

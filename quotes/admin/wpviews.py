@@ -8,7 +8,7 @@ from quotes.admin.wpmodels import Images
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from quotes.admin import cache
+from quotes.admin import cache, runSysCommand
 from dqote import env
 
 imageRows = int(env.get('quotes', 'IMAGE_ROWS'))
@@ -204,6 +204,29 @@ def cachePurge(request):
         print('Not Allowed')
     return redirect('/wp-admin/list/0/1')
 
+@login_required(login_url='/mycms')
+def makeSiteLive(request):
+    id = request.GET.get('id', None)
+    site = request.GET.get('site', None)
+    res = None
+    cmd = 'hugoBuild'
+    if id == '159753' and site:
+        res = runSysCommand.run(cmd, site)
+    else:
+        print('Not Allowed')
+    return render(request, 'info.html', {'res': res})
+
+@login_required(login_url='/mycms')
+def purgeSite(request):
+    id = request.GET.get('id', None)
+    site = request.GET.get('site', None)
+    res = None
+    cmd = 'purgeCloudflare'
+    if id == '159753' and site:
+        res = runSysCommand.run(cmd, site)
+    else:
+        print('Not Allowed')
+    return render(request, 'info.html', {'res': res})
 
 @login_required(login_url='/mycms')
 def importQuotes(request):
