@@ -4,7 +4,7 @@ import subprocess
 scriptPath = env.get('admin', 'SCRIPT_PATH')
 
 def run(cmd, site):
-    sudo = 'sudo -S <<< Aircel#1 runuser -u ahmad'
+    sudo = 'sudo -S <<< Aircel#1 runuser -u ahmad '
     print('command : ', cmd, ' | site : ', site)
     process = subprocess.run([sudo + scriptPath + cmd, site ], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     
